@@ -47,8 +47,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const cleanedEmail = email.replace(/\s+/g, '');
-  const cleanedPassword = password.replace(/\s+/g, '');
+  const cleanedEmail = email.replace(/\s+/g, '')
+  const cleanedPassword = password.replace(/\s+/g, '')
 
   try {
     const checkUser = await User.findOne({ email:cleanedEmail });
@@ -59,7 +59,7 @@ export const loginUser = async (req, res) => {
     if (!checkPasswordMatch)
       return res.json({ message: "Incorrect password! Please try again"});
 
-       const token=await jwt.sign({userId:checkUser._id},process.env.JWT_SECRET,{expiresIn:"1d"})
+       const token=await jwt.sign({id:checkUser._id,role:checkUser.role},process.env.JWT_SECRET,{expiresIn:"1d"})
 
         return res.status(200).cookie('token',token,{httpOnly:true,sameSite:"strict",maxAge:1 * 24 * 60 * 60 * 1000}).json({
             message:"Loggedin successfully",

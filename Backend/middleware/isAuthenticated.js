@@ -20,7 +20,7 @@ const isAuthenticated=async(req,res,next)=>{
             })
         }
 
-        const user=await User.findById(decoded.userId)
+        const user=await User.findById(decoded.id)
 
         if(!user){
             return res.status(401).json({
